@@ -14,8 +14,9 @@
 #include <iostream>
 #include <string>
 #include <cctype>
+#include <sstream>
 
-bool	ischar(const std::string &literal){
+bool	isChar(const std::string &literal){
 	if (literal.length() == 1){
 		if (std::isprint(literal[0]))
 			return (true);
@@ -25,7 +26,7 @@ bool	ischar(const std::string &literal){
 	return (false);
 }
 
-bool	isint(const std::string &literal){
+bool	isInt(const std::string &literal){
 	size_t	i = 0;
 
 	if (literal[i] == '-' || literal[i] == '+')
@@ -38,7 +39,7 @@ bool	isint(const std::string &literal){
 	return (true);
 }
 
-bool	isfloat(const std::string &literal){
+bool	isFloat(const std::string &literal){
 	size_t	i = 0;
 	bool	hasdot = false;
 
@@ -56,19 +57,61 @@ bool	isfloat(const std::string &literal){
 		else if (!std::isdigit(literal[i]))
 			return (false);
 	}
-	if (hasdot)
+	if (hasdot && std::isdigit(literal[i - 1]))
 		return (true);
 	return (false);
 }
 
-// bool	isdouble(const std::string &literal){
+bool	isDouble(const std::string &literal){
+	size_t	i = 0;
+	bool	hasdot = false;
 
-// }
+	if (literal[i] == '-' || literal[i] == '+')
+		i++;
+	for(; i < literal.length(); i++){
+		if (literal[i] == '.'){
+			if (hasdot)
+				return(false);
+			hasdot = true;
+		}
+		else if (!std::isdigit(literal[i]))
+			return (false);
+	}
+	if (hasdot && std::isdigit(literal[i -1]))
+		return (true);
+	return (false);
+}
 
-void ScalarConverter::convert(const std::string &literal){
-	if (isfloat(literal)){
-		std::cout << "well done" << std::endl;
+void	convertChar(const std::string &literal){
+	char	c = literal[0];
+
+	std::cout << "char: '" << c << "'" <<std::endl;
+	std::cout << "int: " << static_cast<int>(c) << std::endl;
+	std::cout << "float: " << static_cast<float>(c) << ".0f" << std::endl;
+	std::cout << "double: " << static_cast<double>(c) << ".0" << std::endl;
+}
+
+void	convertInt(const std::string &literal){
+	int	value = 0;
+
+	std::stringstream ss(literal);
+	ss >> value;
+	if (ss.fail())
+		std::cerr << "Conversion failed" << std::endl;
+	else{
+		std::cout << "char: '" << static_cast<char>(value) << "'" << std::endl;
+		std::cout << "int:" << value << std::endl;
+		std::cout << "float:" << static_cast<float>(value) << std::endl;
+		std::cout << "double:" << static_cast<double>(value) << std::endl;
+		// a tester
+	}
+	return ;
+}
+
+void 	ScalarConverter::convert(const std::string &literal){
+	if (isChar(literal)){
+		convertChar(literal);
 	}else{
-		std::cout << "too bad" << std::endl;
+		std::cout << "Not a char bitch" << std::endl;
 	}
 }

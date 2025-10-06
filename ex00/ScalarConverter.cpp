@@ -11,29 +11,64 @@
 /* ************************************************************************** */
 
 #include "ScalarConverter.hpp"
+#include <iostream>
+#include <string>
+#include <cctype>
 
-bool	ft_isalpha(const std::string &s){
-	for (std::string::size_type i = 0; i < s.size(); ++i){
-		if(!std::isalpha(static_cast<unsigned char>(s[i])))
+bool	ischar(const std::string &literal){
+	if (literal.length() == 1){
+		if (std::isprint(literal[0]))
+			return (true);
+		else
+			std::cerr << "non-printable char" << std::endl;
+	}
+	return (false);
+}
+
+bool	isint(const std::string &literal){
+	size_t	i = 0;
+
+	if (literal[i] == '-' || literal[i] == '+')
+		i++;
+	for(; i < literal.length(); i++){
+		if (!std::isdigit(literal[i])){
+			return (false);
+		}
+	}
+	return (true);
+}
+
+bool	isfloat(const std::string &literal){
+	size_t	i = 0;
+	bool	hasdot = false;
+
+	if (literal[literal.length() - 1] != 'f')
+		return (false);
+		
+	if (literal[i] == '-' || literal[i] == '+')
+		i++;
+	for(; i < literal.length() - 1; i++){
+		if (literal[i] == '.'){
+			if (hasdot)
+				return(false);
+			hasdot = true;
+		}
+		else if (!std::isdigit(literal[i]))
 			return (false);
 	}
-	return (!s.empty());
+	if (hasdot)
+		return (true);
+	return (false);
 }
 
-bool	ft_isnum(const std::string &s){
-	for (std::string::size_type i = 0; i < s.size(); ++i){
-		if(!std::isdigit(static_cast<unsigned char>(s[i])))
-			return (false);
-	}
-	return (!s.empty());
-}
+// bool	isdouble(const std::string &literal){
 
-bool	ft_isfloat(const std::string &s){
-	for(std::string::size_type i = 0; i < s.size(); ++i){
-
-	}
-}
+// }
 
 void ScalarConverter::convert(const std::string &literal){
-
+	if (isfloat(literal)){
+		std::cout << "well done" << std::endl;
+	}else{
+		std::cout << "too bad" << std::endl;
+	}
 }

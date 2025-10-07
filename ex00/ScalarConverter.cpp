@@ -82,6 +82,12 @@ bool	isDouble(const std::string &literal){
 	return (false);
 }
 
+bool	isDisplayable(const int i){
+	if (!std::isprint(i))
+		return (false);
+	return (true);
+}
+
 void	convertChar(const std::string &literal){
 	char	c = literal[0];
 
@@ -99,7 +105,10 @@ void	convertInt(const std::string &literal){
 	if (ss.fail())
 		std::cerr << "Conversion failed" << std::endl;
 	else{
-		std::cout << "char: '" << static_cast<char>(value) << "'" << std::endl;
+		if (isDisplayable(value))
+			std::cout << "char: '" << static_cast<char>(value) << "'" << std::endl;
+		else
+			std::cout << "char: Non displayable" << std::endl;		
 		std::cout << "int:" << value << std::endl;
 		std::cout << "float:" << static_cast<float>(value) << std::endl;
 		std::cout << "double:" << static_cast<double>(value) << std::endl;
@@ -109,8 +118,8 @@ void	convertInt(const std::string &literal){
 }
 
 void 	ScalarConverter::convert(const std::string &literal){
-	if (isChar(literal)){
-		convertChar(literal);
+	if (isInt(literal)){
+		convertInt(literal);
 	}else{
 		std::cout << "Not a char bitch" << std::endl;
 	}

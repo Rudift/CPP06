@@ -15,6 +15,7 @@
 #include <string>
 #include <cctype>
 #include <sstream>
+#include <limits>
 
 bool	isChar(const std::string &literal){
 	if (literal.length() == 1){
@@ -43,6 +44,9 @@ bool	isFloat(const std::string &literal){
 	size_t	i = 0;
 	bool	hasdot = false;
 
+	if (literal == "nanf" || literal == "+inff" || literal == "-inff")
+		return (true);
+
 	if (literal[literal.length() - 1] != 'f')
 		return (false);
 		
@@ -65,6 +69,9 @@ bool	isFloat(const std::string &literal){
 bool	isDouble(const std::string &literal){
 	size_t	i = 0;
 	bool	hasdot = false;
+
+	if (literal == "nan" || literal == "+inf" || literal == "-inf")
+		return (true);
 
 	if (literal[i] == '-' || literal[i] == '+')
 		i++;
@@ -102,25 +109,90 @@ void	convertInt(const std::string &literal){
 
 	std::stringstream ss(literal);
 	ss >> value;
-	if (ss.fail())
-		std::cerr << "Conversion failed" << std::endl;
+	if (ss.fail()){
+		std::cout << "char: impossible" << std::endl;
+		std::cout << "int: impossible" << std::endl;
+		std::cout << "float: nanf" << std::endl;
+		std::cout << "double: nan" << std::endl;
+	}
 	else{
 		if (isDisplayable(value))
 			std::cout << "char: '" << static_cast<char>(value) << "'" << std::endl;
 		else
 			std::cout << "char: Non displayable" << std::endl;		
-		std::cout << "int:" << value << std::endl;
-		std::cout << "float:" << static_cast<float>(value) << std::endl;
-		std::cout << "double:" << static_cast<double>(value) << std::endl;
-		// a tester
+		std::cout << "int: " << value << std::endl;
+		std::cout << "float: " << static_cast<float>(value) << ".0f" << std::endl;
+		std::cout << "double: " << static_cast<double>(value) << ".0" << std::endl;
 	}
 	return ;
 }
 
+void	convertFloat(const std::string &literal){
+	float	value = 0;
+
+	if (literal == "nanf")
+		value = std::numeric_limits<float>::quiet_NaN();
+	else if (literal == "+inf")
+		value = std::numeric_limits<float>::infinity();
+	else if (literal == "-inf")
+		value = -std::numeric_limits<float>::infinity();
+	else{
+		std::stringstream ss(literal);
+		ss >> value;
+		if (ss.fail())
+			std::cerr << "Conversion failed" << std::endl;
+		else{
+			if (isDisplayable(value))
+				std::cout << "char: '" << static_cast<char>(value) << "'" << std::endl;
+			else
+				std::cout << "char: Non displayable" << std::endl;
+			std::cout << "int: " << static_cast<int>(value) << std::endl;
+			std::cout << "float: " << value << std::endl;
+			std::cout << "double: " << static_cast<double>(value) << std::endl;
+		}
+	}
+}
+
+void	convertDouble(const std::string &literal){
+	float	value = 0;
+
+	if (literal == "nanf")
+		value = std::numeric_limits<float>::quiet_NaN();
+	else if (literal == "+inf")
+		value = std::numeric_limits<float>::infinity();
+	else if (literal == "-inf")
+		value = -std::numeric_limits<float>::infinity();
+	else{
+		std::stringstream ss(literal);
+		ss >> value;
+		if (ss.fail())
+			std::cerr << "Conversion failed" << std::endl;
+		else{
+			if (isDisplayable(value))
+				std::cout << "char: '" << static_cast<char>(value) << "'" << std::endl;
+			else
+				std::cout << "char: Non displayable" << std::endl;
+			std::cout << "int: " << static_cast<int>(value) << std::endl;
+			std::cout << "float: " << static_cast<float>(value) << "f" << std::endl;
+			std::cout << "double: " << value << std::endl;
+		}
+	}
+}
+
 void 	ScalarConverter::convert(const std::string &literal){
-	if (isInt(literal)){
+	if (isChar(literal)){
+		std::cout << "C'est un char" << std::endl;
+		convertChar(literal);
+	}else if (isInt(literal)){
+		std::cout << "C'est un int" << std::endl;
 		convertInt(literal);
+	}else if (isFloat(literal)){
+		std::cout << "C'est un float" << std::endl;
+		convertFloat(literal);
+	}else if (isDouble(literal)){
+		std::cout << "C'est un double" << std::endl;
+		convertDouble(literal);
 	}else{
-		std::cout << "Not a char bitch" << std::endl;
+		
 	}
 }

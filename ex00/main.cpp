@@ -19,6 +19,5 @@ int	main(int ac, char** av){
 		return (1);
 	}
 	std::string input = av[1];
-	std::cout << input << std::endl;
 	ScalarConverter::convert(input);
 }

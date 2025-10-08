@@ -33,3 +33,41 @@ Base*	Base::generate(void){
 		return (new C);
 	}
 }
+
+void Base::identify(Base* p){
+	if (dynamic_cast<A*>(p)){
+		std::cout << "Type of the object: A" << std::endl;
+	}else if (dynamic_cast<B*>(p)){
+		std::cout << "Type of the object: B" << std::endl;
+	}else if (dynamic_cast<C*>(p)){
+		std::cout << "Type of the object: C" << std::endl;
+	}else{
+		std::cout << "The object is not a child of Base" << std::endl;
+	}
+}
+
+void Base::identify(Base& p){
+	try{
+		A& a = dynamic_cast<A&>(p);
+		std::cout << "Type of the object: A" << std::endl;
+		return ;
+	}catch(const std::bad_cast&){
+		std::cout << "The object is not a child of Base" << std::endl;
+	}
+
+	try{
+		B& b = dynamic_cast<B&>(p);
+		std::cout << "Type of the object: B" << std::endl;
+		return ;
+	}catch(const std::bad_cast&){
+		std::cout << "The object is not a child of Base" << std::endl;
+	}
+
+	try{
+		C& c = dynamic_cast<C&>(p);
+		std::cout << "Type of the object: C" << std::endl;
+		return ;
+	}catch(const std::bad_cast&){
+		std::cout << "The object is not a child of Base" << std::endl;
+	}
+}

@@ -1,34 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Base.hpp                                           :+:      :+:    :+:   */
+/*   main.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vdeliere <vdeliere@student.42.fr>          #+#  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025-10-08 09:23:11 by vdeliere          #+#    #+#             */
-/*   Updated: 2025-10-08 09:23:11 by vdeliere         ###   ########.fr       */
+/*   Created: 2025-10-08 13:41:14 by vdeliere          #+#    #+#             */
+/*   Updated: 2025-10-08 13:41:14 by vdeliere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef BASE_HPP
-# define BASE_HPP
+#include "Base.hpp"
+#include "A.hpp"
+#include "B.hpp"
+#include "C.hpp"
 
-#  include <iostream>
-#  include <cstdlib>
-#  include <ctime>
-#  include <iostream>
-#  include <exception>
+int	main(void){
+	Base* a = new A;
+	Base* b = new B;
+	Base* c = new C;
 
+	std::cout << "/------Test 1 : identification by pointers------/" << std::endl;
+	Base::identify(a);
+	Base::identify(b);
+	Base::identify(c);
 
-class Base
-{
-	public:
-		virtual 	~Base();
-		Base*		generate(void);
-		static void	identify(Base* p);
-		static void		identify(Base& p);
-};
-
-
-
-#endif
+	delete a;
+	delete b;
+	delete c;
+}

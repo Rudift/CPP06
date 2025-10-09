@@ -20,10 +20,20 @@ int	main(void){
 	Base* b = new B;
 	Base* c = new C;
 
+	A a2;
+	B b2;
+	C c2;
+
 	std::cout << "/------Test 1 : identification by pointers------/" << std::endl;
 	Base::identify(a);
 	Base::identify(b);
 	Base::identify(c);
+
+	std::cout << "/------Test 2 : identification by reference------/" << std::endl;
+	Base::identify(a2);
+	Base::identify(b2);
+	Base::identify(c2);
+
 
 	delete a;
 	delete b;

@@ -35,6 +35,7 @@ Base*	Base::generate(void){
 }
 
 void Base::identify(Base* p){
+	std::cout << "Identifaction by pointer" << std::endl;
 	if (dynamic_cast<A*>(p)){
 		std::cout << "Type of the object: A" << std::endl;
 	}else if (dynamic_cast<B*>(p)){
@@ -47,27 +48,25 @@ void Base::identify(Base* p){
 }
 
 void Base::identify(Base& p){
+	std::cout << "Identifaction by reference" << std::endl;
 	try{
-		A& a = dynamic_cast<A&>(p);
+		(void)dynamic_cast<A&>(p);
 		std::cout << "Type of the object: A" << std::endl;
 		return ;
-	}catch(const std::bad_cast&){
-		std::cout << "The object is not a child of Base" << std::endl;
+	}catch(...){
 	}
 
 	try{
-		B& b = dynamic_cast<B&>(p);
+		(void)dynamic_cast<B&>(p);
 		std::cout << "Type of the object: B" << std::endl;
 		return ;
-	}catch(const std::bad_cast&){
-		std::cout << "The object is not a child of Base" << std::endl;
+	}catch(...){
 	}
 
 	try{
-		C& c = dynamic_cast<C&>(p);
+		(void)dynamic_cast<C&>(p);
 		std::cout << "Type of the object: C" << std::endl;
 		return ;
-	}catch(const std::bad_cast&){
-		std::cout << "The object is not a child of Base" << std::endl;
+	}catch(...){
 	}
 }

@@ -28,7 +28,7 @@ ScalarConverter& ScalarConverter::operator=(const ScalarConverter& src){
 	return (*this);
 }
 
-ScalarConverter::ScalarConverter(){}
+ScalarConverter::~ScalarConverter(){}
 
 bool	isChar(const std::string &literal){
 	if (literal.length() == 1 && !std::isdigit(literal[0]))

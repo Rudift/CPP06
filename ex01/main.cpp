@@ -19,7 +19,7 @@ int	main(){
 	uintptr_t	raw = Serializer::serialize(&data);
 	Data*		ptr = Serializer::deserialize(raw);
 
-	std::cout << "Data.x = " << ptr->intValue << std::endl;
+	std::cout << "Data = " << ptr->intValue << std::endl;
 	std::cout << "Adresse originale : " << &data << std::endl;
 	std::cout << "Adresse deserialisee : " << ptr << std::endl;
 }
